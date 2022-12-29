@@ -14,7 +14,7 @@ $
 111yesssss
  aa
 a
-tests
+test
 a
 a
 a
