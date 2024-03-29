@@ -1,4 +1,0 @@
-Cheatsheets
-Complete-AI-and-Machine-Learning-Data-Science-Bootcamp
-Python-for-DS-and-ML-Bootcamp
-text.txt
