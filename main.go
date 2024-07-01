@@ -1,47 +1,28 @@
 package main
 
-import (
-	"fmt"
-	"log"
-	"os"
-)
-
-func readFile(path string) {
-
-	file, err := os.Open(path)
-	if err != nil {
-		log.Panic(err)
-	}
-
-	data := make([]byte, 100)
-	if _, err := file.Read(data); err != nil {
-		log.Panic(err)
-	}
-
-	fmt.Println(string(data))
-}
-
-var heads, tails int
-
-func flipCoin(side string) {
-
-	switch side {
-	case "head":
-		heads++
-	case "tail":
-		tails++
-	default:
-		fmt.Println("Coin is straight")
-	}
-
-	fmt.Print("\nHeads: ", heads, "\nTails: ", tails, "\n")
-}
+import "fmt"
 
 func main() {
-	readFile("hello.txt")
+	// Classic loop: start; conditional; after
+	for i := 0; i < 10; i = i + 2 {
+		fmt.Println(i)
+	} // You could put `start` before the for loop, and the `after` just inside the for loop as well, it's up to you.
 
-	flipCoin("head")
-	flipCoin("head")
-	flipCoin("tail")
+	names := []string{"Tiago", "Daniel", "Maria", "Marta"}
+
+	// Looping with the length of the array.
+	for i := 0; i < len(names); i++ {
+		fmt.Println(names[i], i)
+	}
+	// For and Range
+	for index, name := range names {
+		fmt.Println(index, name)
+	} // You can also use `_` instead of index, so Go will ignore it and just get the name data for you.
+
+	// Infinite loop
+	for {
+		fmt.Println("loop")
+		break
+	}
 
 }
