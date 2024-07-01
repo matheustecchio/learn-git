@@ -3,26 +3,31 @@ package main
 import "fmt"
 
 func main() {
-	// Classic loop: start; conditional; after
-	for i := 0; i < 10; i = i + 2 {
-		fmt.Println(i)
-	} // You could put `start` before the for loop, and the `after` just inside the for loop as well, it's up to you.
+	// Slices: Can increase and decrease in capacity. As the capacity reach its top limit, Go double its capacity in memory.
+	// The first capacity of a slice declared with only `:=` is the length of it.
+	names := []string{"Tiago", "Daniel", "Marcos", "Marta"}
+	fmt.Println(names, len(names), cap(names))
 
-	names := []string{"Tiago", "Daniel", "Maria", "Marta"}
+	names = append(names, "Rafael")
+	fmt.Println(names, len(names), cap(names))
 
-	// Looping with the length of the array.
-	for i := 0; i < len(names); i++ {
-		fmt.Println(names[i], i)
-	}
-	// For and Range
-	for index, name := range names {
-		fmt.Println(index, name)
-	} // You can also use `_` instead of index, so Go will ignore it and just get the name data for you.
+	names = append(names, "Roberta")
+	fmt.Println(names, len(names), cap(names))
 
-	// Infinite loop
-	for {
-		fmt.Println("loop")
-		break
-	}
+	names = append(names, "Rafael")
+	fmt.Println(names, len(names), cap(names))
+
+	names = append(names, "Matheus")
+	fmt.Println(names, len(names), cap(names))
+
+	names = append(names, "John")
+	fmt.Println(names, len(names), cap(names))
+
+	// If we want to make slice with a capacity bigger than the length of it, we can use the make() function.
+	students := make([]string, 0, 15) // It starts the slice with 0 values but with 15 of capacity in memory.
+	fmt.Println(students, len(students), cap(students))
+
+	pizza := make([]string, 8) // It starts the slice with 8 values and a capacity of 8 as well.
+	fmt.Println(pizza, len(pizza), cap(pizza))
 
 }
