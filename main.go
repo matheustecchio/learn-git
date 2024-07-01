@@ -2,19 +2,28 @@ package main
 
 import "fmt"
 
+type Person struct {
+	name   string
+	age    int8
+	salary float32
+	status bool
+}
+
 func main() {
-	ages := make(map[string]int8)
-	ages["Tiago"] = 31
-	ages["Marta"] = 43
-	ages["Daniel"] = 26
-	ages["Matheus"] = 23
+	var p Person
+	p.name = "Matheus"
+	p.age = 21
+	p.salary = 2000
+	p.status = true
 
-	fmt.Println(ages)
-	fmt.Println(ages["Tiago"])
-	fmt.Println(ages["Lucas"]) // As `Lucas` doesn't exist, it returns the zero-value of the type, in this case, 0.
+	p2 := Person{
+		name:   "Tiago",
+		age:    26,
+		salary: 3000,
+		status: true,
+	}
 
-	// We can assign two variables to a map value, the first return the value itself and the second returns a boolean, true if the key exists and false if not.
-	value, ok := ages["Marta"]
-	fmt.Println(value, ok)
+	fmt.Println(p)
+	fmt.Println(p2)
 
 }
