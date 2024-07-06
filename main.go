@@ -1,32 +1,43 @@
 package main
 
-import (
-	"fmt"
-	"math"
+import "fmt"
+
+var (
+	revenue  float64
+	expenses float64
+	taxRate  float64
 )
 
+func getInformations() {
+	fmt.Print("Your Revenue: ")
+	fmt.Scan(&revenue)
+
+	fmt.Print("Your Expenses: ")
+	fmt.Scan(&expenses)
+
+	fmt.Print("Tax Rate: ")
+	fmt.Scan(&taxRate)
+}
+
+func earningsBeforeTax(revenue, expenses float64) float64 {
+	return revenue - expenses
+}
+
+func earningsAfterTax(revenue, expenses, taxRate float64) float64 {
+	return ((revenue - expenses) * (1 - taxRate/100))
+}
+
+func calculateRatio() float64 {
+	EBT := earningsBeforeTax(revenue, expenses)
+	profit := earningsAfterTax(revenue, expenses, taxRate)
+
+	return EBT / profit
+}
+
 func main() {
-	const inflationRate = 3.0
-
-	var (
-		investmentAmount   float64
-		expectedReturnRate float64
-		years              float64
-	)
-
-	fmt.Print("Investment Amount: ")
-	fmt.Scan(&investmentAmount)
-
-	fmt.Print("Expected Return Rate: ")
-	fmt.Scan(&expectedReturnRate)
-
-	fmt.Print("Years: ")
-	fmt.Scan(&years)
-
-	var futureValue = investmentAmount * math.Pow((1+expectedReturnRate/100), years)
-	var realFutureValue = futureValue / math.Pow((1+inflationRate/100), years)
-
-	fmt.Printf("Future Value: %.2f\n", futureValue)
-	fmt.Printf("Real Future Value: %.2f\n", realFutureValue)
+	getInformations()
+	fmt.Printf("\nEarning before tax: %.2f", earningsBeforeTax(revenue, expenses))
+	fmt.Printf("\nEarning after tax: %.2f", earningsAfterTax(revenue, expenses, taxRate))
+	fmt.Printf("\nRatio: %.2f\n", calculateRatio())
 
 }
