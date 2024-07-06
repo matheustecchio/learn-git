@@ -3,67 +3,74 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
-// FinancialData holds the financial metrics.
-type FinancialData struct {
-	revenue  float64
-	expenses float64
-	taxRate  float64
-}
+var balance float64
 
-// getInput collects user inputs for financial data.
-func getInput() FinancialData {
-	var data FinancialData
+func displayMenu() {
+	fmt.Println("\nWelcome to the Go Bank!")
+	fmt.Println("What do you want to do?")
+	fmt.Println("1. Check balance")
+	fmt.Println("2. Deposit")
+	fmt.Println("3. Withdraw")
+	fmt.Println("0. Exit")
+	var choice uint8
+	fmt.Print("Enter with you option: ")
 
-	fmt.Print("Enter your Revenue: ")
-	if _, err := fmt.Scan(&data.revenue); err != nil {
-		log.Fatalf("Failed to read revenue: %v", err)
+	if _, err := fmt.Scan(&choice); err != nil {
+		log.Panic("Error while computing menu's choice")
 	}
 
-	fmt.Print("Enter your Expenses: ")
-	if _, err := fmt.Scan(&data.expenses); err != nil {
-		log.Fatalf("Failed to read expenses: %v", err)
+	switch choice {
+	case 1:
+		checkBalance()
+	case 2:
+		depositMoney()
+	case 3:
+		withdrawMoney()
+	case 0:
+		os.Exit(0)
 	}
 
-	fmt.Print("Enter your Tax Rate: ")
-	if _, err := fmt.Scan(&data.taxRate); err != nil {
-		log.Fatalf("Failed to read tax rate: %v", err)
+}
+
+func checkBalance() {
+	fmt.Printf("Your balance is: %.2f\n", balance)
+}
+
+func depositMoney() {
+	fmt.Println("Insert how much do you wan to deposit: ")
+	var amount float64
+	if _, err := fmt.Scan(&amount); err != nil {
+		log.Fatal("\nError while depositing...")
 	}
 
-	return data
+	balance = balance + amount
+
+	fmt.Printf("\nYou deposited %2.f to your bank account!\n", amount)
 }
 
-// earningsBeforeTax calculates earnings before tax.
-func earningsBeforeTax(revenue, expenses float64) float64 {
-	return revenue - expenses
-}
-
-// earningsAfterTax calculates earnings after tax.
-func earningsAfterTax(revenue, expenses, taxRate float64) float64 {
-	return (revenue - expenses) * (1 - taxRate/100)
-}
-
-// calculateRatio calculates the ratio of EBT to profit.
-func calculateRatio(data FinancialData) float64 {
-	EBT := earningsBeforeTax(data.revenue, data.expenses)
-	profit := earningsAfterTax(data.revenue, data.expenses, data.taxRate)
-
-	if profit == 0 {
-		log.Fatalf("Profit after tax is zero, cannot calculate ratio")
+func withdrawMoney() {
+	fmt.Println("Insert how much do you wan to withdraw: ")
+	var amount float64
+	if _, err := fmt.Scan(&amount); err != nil {
+		log.Fatal("\nError while withdrawing...")
 	}
 
-	return EBT / profit
+	if amount > balance {
+		log.Fatal("\nYou don't have enough money to complete this operation!")
+	}
+
+	balance = balance - amount
+
+	fmt.Printf("\nYou withdrew %2.f to your bank account!\n", amount)
+
 }
 
 func main() {
-	data := getInput()
+	for {
+		displayMenu()
+	}
 
-	EBT := earningsBeforeTax(data.revenue, data.expenses)
-	profit := earningsAfterTax(data.revenue, data.expenses, data.taxRate)
-	ratio := calculateRatio(data)
-
-	fmt.Printf("\nEarnings before tax: %.2f", EBT)
-	fmt.Printf("\nEarnings after tax: %.2f", profit)
-	fmt.Printf("\nRatio: %.2f\n", ratio)
 }
