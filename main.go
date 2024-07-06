@@ -1,29 +1,32 @@
 package main
 
-import "fmt"
-
-type Person struct {
-	name   string
-	age    int8
-	salary float32
-	status bool
-}
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
-	var p Person
-	p.name = "Matheus"
-	p.age = 21
-	p.salary = 2000
-	p.status = true
+	const inflationRate = 3.0
 
-	p2 := Person{
-		name:   "Tiago",
-		age:    26,
-		salary: 3000,
-		status: true,
-	}
+	var (
+		investmentAmount   float64
+		expectedReturnRate float64
+		years              float64
+	)
 
-	fmt.Println(p)
-	fmt.Println(p2)
+	fmt.Print("Investment Amount: ")
+	fmt.Scan(&investmentAmount)
+
+	fmt.Print("Expected Return Rate: ")
+	fmt.Scan(&expectedReturnRate)
+
+	fmt.Print("Years: ")
+	fmt.Scan(&years)
+
+	var futureValue = investmentAmount * math.Pow((1+expectedReturnRate/100), years)
+	var realFutureValue = futureValue / math.Pow((1+inflationRate/100), years)
+
+	fmt.Printf("Future Value: %.2f\n", futureValue)
+	fmt.Printf("Real Future Value: %.2f\n", realFutureValue)
 
 }
